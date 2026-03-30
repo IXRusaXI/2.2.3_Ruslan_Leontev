@@ -21,26 +21,31 @@ function App() {
     clearAll()
   }
 
-  const clearAll = () => {
-    list.map(ref => {
-      if (!!ref) {
-        if (ref !== activeCircle) {
+  // const clearAll = () => {
+  //   list.map(ref => {
+  //     if (!!ref) {
+  //       if (ref !== activeCircle) {
           
-        }
-      }
-    })
+  //       }
+  //     }
+  //   })
+  // }
+
+  const getActive = (element) => {
+    console.log("Сравнение", element, activeCircle, element === activeCircle)
+    return element === activeCircle
   }
 
   return (
     <div className="semaphore-container">
       <div className="semaphore-item">
-        <Circle ref={redRef} color="red" active={true} onClick={changeActiveCircle}/>
+        <Circle ref={redRef} color="red" active={(redRef) => getActive(redRef)} onClick={changeActiveCircle}/>
       </div>
       <div className="semaphore-item">
-        <Circle ref={orangeRef} color="orange" onClick={changeActiveCircle}/>
+        <Circle ref={orangeRef} color="orange" active={(orangeRef) => getActive(orangeRef)} onClick={changeActiveCircle}/>
       </div>
       <div className="semaphore-item">
-        <Circle ref={greenRef} color="green" onClick={changeActiveCircle}/>
+        <Circle ref={greenRef} color="green" active={(greenRef) => getActive(greenRef)} onClick={changeActiveCircle}/>
       </div>
     </div>
   );

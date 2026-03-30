@@ -9,16 +9,11 @@ import { MutableRefObject, useState, forwardRef } from 'react';
 
 export const Circle = forwardRef((props, ref) => {
   // console.log('Получено в кружочке', props.color, props.active)
-  const [activeState, setActiveState] = useState(props.active)
-
-  const toggleActive = () => {
-    setActiveState(!activeState)
-  }
 
   return <div ref={ref} onClick={props.onClick} className={classNames(
     "circle",
     "circle-" + props.color,
-    activeState && ("circle-" + props.color + "--active")
+    props.active() && ("circle-" + props.color + "--active")
   )} />;
 }
 )
