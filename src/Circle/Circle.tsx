@@ -1,6 +1,6 @@
 import './Circle.css';
 import classNames from 'classnames';
-import { MutableRefObject, useState, forwardRef } from 'react';
+import { MutableRefObject, useState, forwardRef, useEffect } from 'react';
 
 // interface Props {
 //   color: string;
@@ -8,12 +8,31 @@ import { MutableRefObject, useState, forwardRef } from 'react';
 // }
 
 export const Circle = forwardRef((props, ref) => {
-  // console.log('Получено в кружочке', props.color, props.active)
+  const [active, setActive] = useState(false)
+  
+  useEffect(() => {
+    // console.log('Триггерю', ref, props.active)
+    setActive(ref.current === props.active)
+    ref.current.focus()
+  }, [ref, props.active])
 
-  return <div ref={ref} onClick={props.onClick} className={classNames(
+  const onKeyDown = (evt) => {
+    evt.preventDefault()
+    switch(evt.key) {
+      case 'Tab' :
+        console.log("Нажал таб", props.next())
+
+        props.next().current.focus()
+        break
+      case 'Enter' :
+        activate()
+    }
+  }
+
+  return <div type="checbox" tabIndex={0} ref={ref} onKeyDown={onKeyDown} onClick={props.onClick} className={classNames(
     "circle",
     "circle-" + props.color,
-    props.active() && ("circle-" + props.color + "--active")
+    active && ("circle-" + props.color + "--active")
   )} />;
 }
 )
