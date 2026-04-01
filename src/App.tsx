@@ -3,46 +3,83 @@ import './App.css';
 import { Circle } from './Circle/Circle';
 
 function App() {
-  const [activeCircle, setActiveCircle] = useState({})
-  const [index, setIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [active, setActive] = useState({})
 
   const redRef = useRef(null)
   const orangeRef = useRef(null)
   const greenRef = useRef(null)
-
   const list = [redRef, orangeRef, greenRef]
 
-  const next = () => {
-    if (index < list.length) {
-      setIndex(index + 1)
-      return list[index + 1]
+  const keyDown = (e) => {
+    switch(e.key) {
+      case 'Tab':
+        e.preventDefault()
+        if (activeIndex === 2) {
+          setActiveIndex(0)
+        } else {
+          setActiveIndex(activeIndex + 1)
+        }
+        break
+      case 'Enter':
+        setActive(list[activeIndex])
+        break
     }
+  }
 
-    setIndex(0)
-    return list[0]
+  const focus = (ref) => {
+    setActiveIndex(list.indexOf(ref))
+  }
+
+  const activate = () => {
+    setActive(list[activeIndex])
+  }
+
+  const click = (ref) => {
+    focus(ref)
+    // activate()
   }
 
   useEffect(() => {
-    setActiveCircle(redRef.current)
+    activate()
   }, [])
 
-  const changeActiveCircle = (evt) => {
-    console.log(redRef, orangeRef, greenRef)
+  useEffect(() => {
+    list[activeIndex].current.focus()
+  }, [activeIndex])
 
-    setActiveCircle(evt.target)
-    console.log(activeCircle)
-  }
+  // useEffect(() => {
+  //   list[activeIndex].current.focus()
+  // }, [active])
 
   return (
     <div className="semaphore-container">
       <div className="semaphore-item">
-        <Circle ref={redRef} color="red" active={activeCircle} onClick={changeActiveCircle} next={() => next()}/>
+        <Circle 
+          ref={redRef} 
+          color="red" 
+          active={redRef === active} 
+          onClick={click}
+          onKeyDown={keyDown}
+        />
       </div>
       <div className="semaphore-item">
-        <Circle ref={orangeRef} color="orange" active={activeCircle} onClick={changeActiveCircle} next={() => next()}/>
+        <Circle 
+          ref={orangeRef} 
+          color="orange" 
+          active={orangeRef === active}
+          onClick={click} 
+          onKeyDown={keyDown}
+        />
       </div>
       <div className="semaphore-item">
-        <Circle ref={greenRef} color="green" active={activeCircle} onClick={changeActiveCircle} next={() => next()}/>
+        <Circle 
+          ref={greenRef} 
+          color="green" 
+          active={greenRef === active}
+          onClick={click} 
+          onKeyDown={keyDown}
+        />
       </div>
     </div>
   );
