@@ -4,6 +4,10 @@
   border-radius: 50%;
 }
 
+.circle:focus {
+  outline: 1px solid rgb(255, 255, 152);
+}
+
 .circle-red {
   background-color: crimson;
   opacity: 0.3;
