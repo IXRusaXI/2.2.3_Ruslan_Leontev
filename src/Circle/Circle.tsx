@@ -15,7 +15,7 @@ export const Circle = forwardRef(({onClick, onFocus, onKeyDown, color, active}: 
   return <div  
     ref={ref} 
     type="button" 
-    tabIndex={0} 
+
     onClick={() => onClick(ref)}
     onFocus={onFocus} 
     onKeyDown={onKeyDown} 

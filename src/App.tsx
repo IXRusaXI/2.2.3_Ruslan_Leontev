@@ -36,8 +36,11 @@ function App() {
   }
 
   const click = (ref) => {
-    focus(ref)
-    // activate()
+    const currentIndex = list.indexOf(ref)
+    setActiveIndex(currentIndex)
+    setActive(list[currentIndex])
+
+    list[currentIndex].current.focus()    
   }
 
   useEffect(() => {
@@ -58,6 +61,7 @@ function App() {
         <Circle 
           ref={redRef} 
           color="red" 
+          tabIndex={0} 
           active={redRef === active} 
           onClick={click}
           onKeyDown={keyDown}
@@ -67,6 +71,7 @@ function App() {
         <Circle 
           ref={orangeRef} 
           color="orange" 
+          tabIndex={0} 
           active={orangeRef === active}
           onClick={click} 
           onKeyDown={keyDown}
@@ -76,6 +81,7 @@ function App() {
         <Circle 
           ref={greenRef} 
           color="green" 
+          tabIndex={0} 
           active={greenRef === active}
           onClick={click} 
           onKeyDown={keyDown}
